@@ -3,251 +3,21 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Mi Checklist</title>
-        <style>
-            * {
-                box-sizing: border-box;
-            }
-            body {
-                margin: 0;
-                font-family:
-                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                    sans-serif;
-                background: #0e0b1a;
-                background-image:
-                    radial-gradient(
-                        circle at 20% 0%,
-                        rgba(157, 78, 221, 0.15),
-                        transparent 45%
-                    ),
-                    radial-gradient(
-                        circle at 90% 20%,
-                        rgba(0, 245, 212, 0.1),
-                        transparent 40%
-                    );
-                color: #f1eefc;
-                min-height: 100vh;
-                padding: 16px;
-            }
-            .container {
-                max-width: 480px;
-                margin: 0 auto;
-            }
-            h1 {
-                font-size: 24px;
-                font-weight: 700;
-                margin: 8px 0 20px;
-                text-align: center;
-                background: linear-gradient(90deg, #ff5ecb, #7c5cff, #00f5d4);
-                -webkit-background-clip: text;
-                background-clip: text;
-                color: transparent;
-            }
-            h2 {
-                font-size: 15px;
-                font-weight: 700;
-                margin: 22px 0 10px;
-                color: #00f5d4;
-                letter-spacing: 0.02em;
-            }
-            h3 {
-                font-size: 12px;
-                font-weight: 700;
-                margin: 14px 0 6px;
-                color: #ff5ecb;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
-            }
-            .add-row {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                margin-bottom: 16px;
-            }
-            .add-row-inner {
-                display: flex;
-                gap: 8px;
-            }
-            input[type="text"] {
-                padding: 12px 14px;
-                font-size: 16px;
-                border: 1px solid #3a2f5c;
-                border-radius: 10px;
-                background: #1a1530;
-                color: #f1eefc;
-                font-family: inherit;
-            }
-            input[type="text"]::placeholder {
-                color: #8a7fb0;
-            }
-            #new-item {
-                flex: 1;
-            }
-            #new-category {
-                width: 130px;
-            }
-            input:focus {
-                outline: none;
-                border-color: #ff5ecb;
-                box-shadow: 0 0 0 3px rgba(255, 94, 203, 0.2);
-            }
-            #add-btn {
-                padding: 12px 18px;
-                font-size: 16px;
-                font-weight: 700;
-                border: none;
-                border-radius: 10px;
-                background: linear-gradient(90deg, #7c5cff, #ff5ecb);
-                color: #fff;
-                cursor: pointer;
-            }
-            #add-btn:active {
-                transform: scale(0.97);
-            }
-            ul {
-                list-style: none;
-                margin: 0;
-                padding: 0;
-            }
-            li {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                background: #1a1530;
-                padding: 14px;
-                border-radius: 10px;
-                margin-bottom: 8px;
-                border: 1px solid #3a2f5c;
-            }
-            li input[type="checkbox"] {
-                width: 22px;
-                height: 22px;
-                flex-shrink: 0;
-                accent-color: #ff5ecb;
-            }
-            .item-text {
-                flex: 1;
-                min-width: 0;
-            }
-            .item-text span.title {
-                font-size: 16px;
-                word-break: break-word;
-                display: block;
-                color: #f1eefc;
-            }
-            .item-text span.meta {
-                font-size: 12px;
-                color: #8a7fb0;
-            }
-            li.done {
-                border-color: #00f5d4;
-                background: #14261f;
-            }
-            li.done .item-text span.title {
-                text-decoration: line-through;
-                color: #6f9d90;
-            }
-            li button.icon-btn {
-                background: none;
-                border: none;
-                font-size: 18px;
-                cursor: pointer;
-                padding: 4px 6px;
-                line-height: 1;
-                color: #00f5d4;
-            }
-            li button.del {
-                color: #ff5e5e;
-                font-size: 20px;
-            }
-            .empty {
-                text-align: center;
-                color: #8a7fb0;
-                padding: 24px 0;
-                font-size: 14px;
-            }
-            .footer {
-                text-align: center;
-                color: #8a7fb0;
-                font-size: 13px;
-                margin-top: 20px;
-            }
-            .footer button {
-                background: none;
-                border: none;
-                color: #ff5e5e;
-                text-decoration: underline;
-                cursor: pointer;
-                font-size: 13px;
-            }
-            .overlay {
-                position: fixed;
-                inset: 0;
-                background: rgba(0, 0, 0, 0.7);
-                display: none;
-                align-items: center;
-                justify-content: center;
-                padding: 20px;
-                z-index: 10;
-            }
-            .overlay.show {
-                display: flex;
-            }
-            .modal {
-                background: #1a1530;
-                border: 1px solid #3a2f5c;
-                border-radius: 14px;
-                padding: 20px;
-                width: 100%;
-                max-width: 360px;
-            }
-            .modal h3 {
-                margin: 0 0 12px;
-                font-size: 16px;
-                color: #f1eefc;
-                text-transform: none;
-                letter-spacing: normal;
-            }
-            .modal .row {
-                display: flex;
-                flex-direction: column;
-                gap: 6px;
-                margin-bottom: 12px;
-            }
-            .modal label {
-                font-size: 12px;
-                color: #8a7fb0;
-            }
-            .modal input[type="text"] {
-                width: 100%;
-            }
-            .modal-actions {
-                display: flex;
-                gap: 8px;
-                margin-top: 16px;
-            }
-            .modal-actions button {
-                flex: 1;
-                padding: 12px;
-                font-size: 15px;
-                font-weight: 700;
-                border: none;
-                border-radius: 10px;
-                cursor: pointer;
-            }
-            .btn-cancel {
-                background: #2a2245;
-                color: #f1eefc;
-            }
-            .btn-confirm {
-                background: linear-gradient(90deg, #7c5cff, #ff5ecb);
-                color: #fff;
-            }
-        </style>
+        <title>Checklist</title>
+        <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
         <div class="container">
-            <h1>✅Checklist</h1>
+            <div class="top-row">
+                <h1>Checklist</h1>
+                <button
+                    id="manage-cats-btn"
+                    class="icon-btn-lg"
+                    aria-label="Gestionar categorías"
+                >
+                    ⚙️
+                </button>
+            </div>
 
             <div class="add-row">
                 <div class="add-row-inner">
@@ -270,18 +40,20 @@
             </div>
 
             <h2>Pendientes</h2>
-            <ul id="pending-list"></ul>
+            <div id="pending-crumb" class="crumb" style="display: none"></div>
+            <div id="pending-view"></div>
             <div id="empty-msg" class="empty" style="display: none">
                 No hay tareas pendientes.
             </div>
 
             <div id="completed-section" style="display: none">
                 <h2>Completadas</h2>
-                <div id="completed-groups"></div>
-            </div>
-
-            <div class="footer">
-                <button id="clear-done">Borrar completadas</button>
+                <div
+                    id="completed-crumb"
+                    class="crumb"
+                    style="display: none"
+                ></div>
+                <div id="completed-view"></div>
             </div>
         </div>
 
@@ -323,283 +95,27 @@
             </div>
         </div>
 
-        <script>
-            let items = [];
-            let categories = [];
-            const STORAGE_KEY = "checklist-items";
-            const CATEGORIES_KEY = "checklist-categories";
-            const DEFAULT_CATEGORIES = [];
-            let editingIndex = null;
+        <div class="overlay" id="categories-overlay">
+            <div class="modal modal-wide">
+                <h3>Gestionar categorías</h3>
+                <div class="new-cat-row">
+                    <input
+                        type="text"
+                        id="new-cat-name"
+                        placeholder="Nueva categoría..."
+                        autocomplete="off"
+                    />
+                    <button id="new-cat-btn" class="btn-confirm">Crear</button>
+                </div>
+                <div id="categories-list" class="categories-list"></div>
+                <div class="modal-actions">
+                    <button class="btn-confirm" id="categories-close">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
 
-            function loadItems() {
-                try {
-                    const raw = localStorage.getItem(STORAGE_KEY);
-                    items = raw ? JSON.parse(raw) : [];
-                } catch (e) {
-                    items = [];
-                }
-                loadCategories();
-                render();
-            }
-
-            function saveItems() {
-                try {
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-                } catch (e) {
-                    console.error("No se pudo guardar", e);
-                }
-            }
-
-            function loadCategories() {
-                try {
-                    const raw = localStorage.getItem(CATEGORIES_KEY);
-                    categories = raw
-                        ? JSON.parse(raw)
-                        : [...DEFAULT_CATEGORIES];
-                } catch (e) {
-                    categories = [...DEFAULT_CATEGORIES];
-                }
-                renderCategoryOptions();
-            }
-
-            function saveCategories() {
-                try {
-                    localStorage.setItem(
-                        CATEGORIES_KEY,
-                        JSON.stringify(categories),
-                    );
-                } catch (e) {
-                    console.error("No se pudo guardar categorías", e);
-                }
-            }
-
-            function addCategoryIfNew(cat) {
-                const trimmed = cat.trim();
-                if (!trimmed) return "General";
-                const exists = categories.some(
-                    (c) => c.toLowerCase() === trimmed.toLowerCase(),
-                );
-                if (!exists) {
-                    categories.push(trimmed);
-                    saveCategories();
-                    renderCategoryOptions();
-                }
-                return trimmed;
-            }
-
-            function renderCategoryOptions() {
-                const datalist = document.getElementById("category-options");
-                datalist.innerHTML = categories
-                    .map((c) => `<option value="${escapeHtml(c)}"></option>`)
-                    .join("");
-            }
-
-            function escapeHtml(str) {
-                const div = document.createElement("div");
-                div.textContent = str;
-                return div.innerHTML;
-            }
-
-            function formatDate(iso) {
-                const d = new Date(iso);
-                return d.toLocaleDateString("es-ES", {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                });
-            }
-
-            function render() {
-                const pendingList = document.getElementById("pending-list");
-                const emptyMsg = document.getElementById("empty-msg");
-                const completedSection =
-                    document.getElementById("completed-section");
-                const completedGroups =
-                    document.getElementById("completed-groups");
-
-                const pending = items.filter((it) => !it.done);
-                const completed = items.filter((it) => it.done);
-
-                pendingList.innerHTML = "";
-                emptyMsg.style.display =
-                    pending.length === 0 ? "block" : "none";
-
-                pending.forEach((item) => {
-                    const i = items.indexOf(item);
-                    pendingList.appendChild(buildLi(item, i));
-                });
-
-                if (completed.length === 0) {
-                    completedSection.style.display = "none";
-                } else {
-                    completedSection.style.display = "block";
-                    const byCategory = {};
-                    completed.forEach((item) => {
-                        const cat = item.category || "General";
-                        if (!byCategory[cat]) byCategory[cat] = [];
-                        byCategory[cat].push(item);
-                    });
-                    Object.keys(byCategory).forEach((cat) => {
-                        byCategory[cat].sort(
-                            (a, b) =>
-                                new Date(a.dateAdded) - new Date(b.dateAdded),
-                        );
-                    });
-                    completedGroups.innerHTML = "";
-                    Object.keys(byCategory)
-                        .sort()
-                        .forEach((cat) => {
-                            const h3 = document.createElement("h3");
-                            h3.textContent = cat;
-                            completedGroups.appendChild(h3);
-                            const ul = document.createElement("ul");
-                            byCategory[cat].forEach((item) => {
-                                const i = items.indexOf(item);
-                                ul.appendChild(buildLi(item, i));
-                            });
-                            completedGroups.appendChild(ul);
-                        });
-                }
-            }
-
-            function buildLi(item, i) {
-                const li = document.createElement("li");
-                if (item.done) li.classList.add("done");
-                li.innerHTML = `
-    <input type="checkbox" ${item.done ? "checked" : ""} data-i="${i}">
-    <div class="item-text">
-      <span class="title">${escapeHtml(item.text)}</span>
-      <span class="meta">${escapeHtml(item.category || "General")} · ${formatDate(item.dateAdded)}</span>
-    </div>
-    <button class="icon-btn edit" data-edit="${i}" aria-label="Editar">✎</button>
-    <button class="icon-btn del" data-del="${i}" aria-label="Eliminar">×</button>
-  `;
-                return li;
-            }
-
-            function openConfirm(text, category) {
-                document.getElementById("confirm-text").textContent =
-                    `¿Agregar "${text}" (${category})?`;
-                document
-                    .getElementById("confirm-overlay")
-                    .classList.add("show");
-            }
-
-            function closeConfirm() {
-                document
-                    .getElementById("confirm-overlay")
-                    .classList.remove("show");
-            }
-
-            document.getElementById("add-btn").addEventListener("click", () => {
-                const input = document.getElementById("new-item");
-                const categoryRaw = document
-                    .getElementById("new-category")
-                    .value.trim();
-                const text = input.value.trim();
-                if (!text) return;
-                openConfirm(text, categoryRaw || "General");
-            });
-
-            document
-                .getElementById("new-item")
-                .addEventListener("keydown", (e) => {
-                    if (e.key === "Enter")
-                        document.getElementById("add-btn").click();
-                });
-
-            document
-                .getElementById("confirm-cancel")
-                .addEventListener("click", closeConfirm);
-
-            document
-                .getElementById("confirm-ok")
-                .addEventListener("click", () => {
-                    const input = document.getElementById("new-item");
-                    const categoryInput =
-                        document.getElementById("new-category");
-                    const text = input.value.trim();
-                    if (!text) {
-                        closeConfirm();
-                        return;
-                    }
-                    const category = addCategoryIfNew(categoryInput.value);
-                    items.push({
-                        text,
-                        category,
-                        done: false,
-                        dateAdded: new Date().toISOString(),
-                    });
-                    input.value = "";
-                    categoryInput.value = "";
-                    saveItems();
-                    render();
-                    closeConfirm();
-                });
-
-            document.body.addEventListener("click", (e) => {
-                if (e.target.matches('input[type="checkbox"]')) {
-                    const i = +e.target.dataset.i;
-                    items[i].done = e.target.checked;
-                    saveItems();
-                    render();
-                }
-                if (e.target.matches("button[data-del]")) {
-                    const i = +e.target.dataset.del;
-                    items.splice(i, 1);
-                    saveItems();
-                    render();
-                }
-                if (e.target.matches("button[data-edit]")) {
-                    editingIndex = +e.target.dataset.edit;
-                    document.getElementById("edit-text").value =
-                        items[editingIndex].text;
-                    document.getElementById("edit-category").value =
-                        items[editingIndex].category || "General";
-                    document
-                        .getElementById("edit-overlay")
-                        .classList.add("show");
-                }
-            });
-
-            document
-                .getElementById("edit-cancel")
-                .addEventListener("click", () => {
-                    document
-                        .getElementById("edit-overlay")
-                        .classList.remove("show");
-                    editingIndex = null;
-                });
-
-            document
-                .getElementById("edit-save")
-                .addEventListener("click", () => {
-                    if (editingIndex === null) return;
-                    const text = document
-                        .getElementById("edit-text")
-                        .value.trim();
-                    if (!text) return;
-                    items[editingIndex].text = text;
-                    items[editingIndex].category = addCategoryIfNew(
-                        document.getElementById("edit-category").value,
-                    );
-                    saveItems();
-                    render();
-                    document
-                        .getElementById("edit-overlay")
-                        .classList.remove("show");
-                    editingIndex = null;
-                });
-
-            document
-                .getElementById("clear-done")
-                .addEventListener("click", () => {
-                    items = items.filter((item) => !item.done);
-                    saveItems();
-                    render();
-                });
-
-            loadItems();
-        </script>
+        <script src="script.js"></script>
     </body>
 </html>
